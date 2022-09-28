@@ -1,22 +1,49 @@
-import React from "react";
-import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
-import Button from "@mui/material/Button";
 import { Box, ThemeProvider } from "@mui/system";
 import { Header } from "./components/Header";
-import { createTheme } from "@mui/material";
-import { Layout } from "./components/Layout";
 
-const theme = createTheme({});
+import { Layout } from "./components/Layout";
+import { appTheme } from "./config/theme";
+import Typography from "@mui/material/Typography";
+
+import { Routes, Route, Link } from "react-router-dom";
+
+const Home = () => {
+  return (
+    <Box>
+      <Typography variant="h3" component="h1">
+        Home
+      </Typography>
+    </Box>
+  );
+};
+
+const About = () => {
+  return (
+    <Box>
+      <Typography variant="h3" component="h1">
+        About
+      </Typography>
+    </Box>
+  );
+};
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Box component="main" sx={{ height: "100vh" }}>
+    <ThemeProvider theme={appTheme}>
+      <Box
+        component="main"
+        sx={{
+          height: "100vh",
+          bgcolor: (theme) => theme.palette.grey[900],
+        }}
+      >
         <Header />
         <Layout>
-          <h1>Hello</h1>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="about" element={<About />} />
+          </Routes>
         </Layout>
       </Box>
     </ThemeProvider>
