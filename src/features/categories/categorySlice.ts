@@ -28,7 +28,7 @@ export const initialState = [
     id: "2",
     name: "Category2",
     description: "Category description",
-    is_active: true,
+    is_active: false,
     deleted_at: null,
     created_at: "10/10 / 10",
     updated_at: "10/10 / 10",
