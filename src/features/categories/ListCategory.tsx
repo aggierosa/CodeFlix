@@ -15,6 +15,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export const CategoryList = () => {
   const categories = useAppSelector(selectCategories);
 
+  const componentsProps = {
+    toolbar: {
+      showQuickFilter: true,
+      quickFilterProps: { debounceMs: 500 },
+    },
+  };
+
   const rows: GridRowsProp = categories.map((category) => ({
     id: category.id,
     name: category.name,
@@ -24,7 +31,12 @@ export const CategoryList = () => {
   }));
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      renderCell: renderNameCell,
+    },
     {
       field: "isActive",
       headerName: "Active",
@@ -44,6 +56,17 @@ export const CategoryList = () => {
   // function handleDelete(value){
   //   return value
   // }
+
+  function renderNameCell(rowData: GridRenderCellParams) {
+    return (
+      <Link
+        style={{ textDecoration: "none" }}
+        to={`/categories/edit/${rowData.id}`}
+      >
+        <Typography color="primary">{rowData.value}</Typography>
+      </Link>
+    );
+  }
 
   function renderAction(rowData: GridRenderCellParams) {
     return (
@@ -79,24 +102,18 @@ export const CategoryList = () => {
         </Button>
       </Box>
 
-      <div style={{ height: 300, width: "100%" }}>
+      <Box sx={{ display: "flex", height: 600 }}>
         <DataGrid
           disableSelectionOnClick={true}
           disableColumnSelector={true}
           disableColumnFilter={true}
           disableDensitySelector={true}
-          // checkboxSelection={true}
           rows={rows}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
+          componentsProps={componentsProps}
         />
-      </div>
+      </Box>
     </Box>
   );
 };
